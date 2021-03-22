@@ -4,15 +4,15 @@
 namespace App\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MainController
+class MainController extends AbstractController
 {
     /**
-     * @Route()
+     * @Route ("/")
      */
     public function home(){
-        echo "<h1>Accueil</h1>";
-        die();
+        return $this->render("main/home.html.twig");
     }
 }
