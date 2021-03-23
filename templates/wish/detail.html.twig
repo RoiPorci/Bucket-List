@@ -6,14 +6,14 @@
     <div class="container">
         <div class="card mb-3 mt-2">
             <div class="card-body text-center">
-                <h1 class="card-title"><i class="fas fa-star"></i> {{ wish.title }} <i class="fas fa-star"></i></h1>
+                <h1 class="card-title"><i class="fas fa-star text-warning"></i> {{ wish.title }} <i class="fas fa-star text-warning"></i></h1>
                 <h5 class="card-text">
                     {{ wish.author }}
                 </h5>
                 <p class="card-text">
                     {{ wish.description }}
                 </p>
-                <img style="width: 18rem;" src="{{ asset('img/wish.jpg') }}" class="card-img-bottom rounded" alt="wish image">
+                <img src="{{ asset('img/wish.jpg') }}" class="card-img-bottom rounded wish-detail-img" alt="wish image">
                 <p class="card-text">
                     <small class="text-muted">Publié le {{ wish.dateCreated|date('d/m/Y à H:i') }}</small>
                 </p>

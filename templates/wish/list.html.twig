@@ -4,12 +4,12 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="text-center">Liste des voeux <i class="bi bi-stars"></i></h1>
+        <h1 class="text-center text-dark-blue mt-2 mb-2">Liste des voeux <i class="bi bi-stars"></i></h1>
 
         {% for wish in wishes %}
             <div class="col mb-1 mt-2">
-                <a href="{{ path('wish_detail', {id:wish.id}) }}" class="no-underline">
                     <div class="card list-wishes">
+                        <a href="{{ path('wish_detail', {id:wish.id}) }}" class="stretched-link"></a>
                         <div class="bd-placeholder-img">
                             <img src="{{ asset('img/wish.jpg') }}" alt="look up to the stars" class="img-wish rounded float-start">
                         </div>
@@ -18,7 +18,7 @@
                             <p class="card-text">{{ wish.author }}</p>
                         </div>
                     </div>
-                </a>
+
             </div>
         {% endfor %}
 

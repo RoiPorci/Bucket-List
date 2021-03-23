@@ -20,6 +20,10 @@
     max-height: 150px;
 }
 
-.no-underline{
-    text-decoration: none;
+.card-text, .card-title, .text-dark-blue{
+    color : #0f3c6d;
+}
+
+.wish-detail-img{
+    max-height: 200px;
 }

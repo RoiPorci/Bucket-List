@@ -22,7 +22,7 @@ class WishController extends AbstractController
     }
 
     /**
-     * @Route("/wishes/detail/{id}", name="wish_detail")
+     * @Route("/wishes/{id}", name="wish_detail")
      */
     public function detail(int $id, WishRepository $wishRepository): Response
     {
