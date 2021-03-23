@@ -19,3 +19,7 @@
     flex-direction: row;
     max-height: 150px;
 }
+
+.no-underline{
+    text-decoration: none;
+}
