@@ -5,19 +5,41 @@
 {% block body %}
     <div class="container">
         <h1>Liste des voeux <i class="bi bi-stars"></i></h1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer bibendum risus arcu, a cursus purus vulputate
-            id. Praesent vestibulum augue facilisis ante tincidunt vulputate. Proin cursus felis et massa sagittis, vel
-            congue leo gravida. In pretium luctus nunc, vel consequat sapien semper nec. Mauris pretium fringilla laoreet.
-            Phasellus tincidunt condimentum tincidunt. Vestibulum quis ligula vitae tortor viverra consequat ut vehicula
-            nisi.
-        </p>
-        <p>
-            Aliquam fringilla sapien at tellus dignissim ullamcorper at sit amet mi. Vestibulum blandit enim et justo
-            vehicula, eu egestas nisl consectetur. Nullam vestibulum mi at ante faucibus volutpat. Duis efficitur
-            tristique justo. Praesent in facilisis lectus. Etiam quis dui euismod, elementum eros nec, iaculis nisi.
-            Nunc ut luctus lacus. Donec elementum et leo vel vestibulum. Aliquam vel augue ut dui hendrerit finibus ut
-            at turpis. Aliquam eget rutrum sem. Sed sagittis faucibus augue non euismod.
-        </p>
+
+        <div class="col">
+            <div class="card list-wishes">
+                <div class="bd-placeholder-img">
+                    <img src="{{ asset('img/wish.jpg') }}" alt="look up to the stars" class="img-wish rounded float-start">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Richesse</h5>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card list-wishes">
+                <div class="bd-placeholder-img">
+                    <img src="{{ asset('img/wish.jpg') }}" alt="look up to the stars" class="img-wish rounded float-start">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Bonheur</h5>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card list-wishes">
+                <div class="bd-placeholder-img">
+                    <img src="{{ asset('img/wish.jpg') }}" alt="look up to the stars" class="img-wish rounded float-start">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Santé</h5>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
