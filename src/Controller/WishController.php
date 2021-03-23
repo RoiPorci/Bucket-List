@@ -14,7 +14,7 @@ class WishController extends AbstractController
      */
     public function list(WishRepository $wishRepository): Response
     {
-        $wishesLast10 = $wishRepository->findBy([], ['date_created' => 'DESC'], 10);
+        $wishesLast10 = $wishRepository->findBy(['is_published' => 1], ['date_created' => 'DESC'], 10);
 
         return $this->render('wish/list.html.twig', [
             'wishes' => $wishesLast10

@@ -21,5 +21,20 @@
                 </div>
             </div>
         </div>
+        {% for wish in wishes %}
+            <div class="col mb-1 mt-2">
+                <div class="card list-wishes">
+                    <a href="{{ path('wish_detail', {id:wish.id}) }}" class="stretched-link"></a>
+                    <div class="bd-placeholder-img">
+                        <img src="{{ asset('img/wish.jpg') }}" alt="look up to the stars" class="img-wish rounded float-start">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ wish.title }}</h5>
+                        <p class="card-text">{{ wish.author }}</p>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
