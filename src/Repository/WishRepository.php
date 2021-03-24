@@ -19,32 +19,30 @@ class WishRepository extends ServiceEntityRepository
         parent::__construct($registry, Wish::class);
     }
 
-    // /**
-    //  * @return Wish[] Returns an array of Wish objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findWishList(int $page = 1, int $maxResults) : ?array
     {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $offset = ($page - 1) * $maxResults;
 
-    /*
-    public function findOneBySomeField($value): ?Wish
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $queryBuilder = $this->createQueryBuilder('w');
+
+        $queryBuilder->andWhere('w.is_published = true');
+
+        $queryBuilder->select('COUNT(w)');
+        $countQuery = $queryBuilder->getQuery();
+        $resultCount = $countQuery->getSingleScalarResult();
+
+        $queryBuilder->addOrderBy('w.date_created', 'DESC');
+        $queryBuilder->setMaxResults($maxResults);
+        $queryBuilder->setFirstResult($offset);
+
+        $queryBuilder->select('w');
+        $query = $queryBuilder->getQuery();
+
+        $result = $query->getResult();
+
+        return [
+            "resultCount" => $resultCount,
+            "result" => $result
+        ];
     }
-    */
 }

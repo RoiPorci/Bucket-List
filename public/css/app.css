@@ -20,10 +20,15 @@
     max-height: 150px;
 }
 
-.card-text, .card-title, .text-dark-blue{
+.card-text, .card-title, .text-dark-blue, .pagination-active{
     color : #0f3c6d;
 }
 
 .wish-detail-img{
     max-height: 200px;
+}
+
+.page-inactive{
+    background-color: #f8f9fa;
+    color: #0f3c6d;
 }

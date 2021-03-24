@@ -10,19 +10,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class WishController extends AbstractController
 {
     /**
-     * @Route("/wishes", name="wish_list")
+     * @Route("/wishes/{page}", name="wish_list", requirements={"page": "\d+"})
      */
-    public function list(WishRepository $wishRepository): Response
+    public function list(int $page = 1, WishRepository $wishRepository): Response
     {
-        $wishesLast10 = $wishRepository->findBy(['is_published' => 1], ['date_created' => 'DESC'], 10);
+        $maxResults = 20;
+        $results = $wishRepository->findWishList($page, $maxResults);
+        $wishesList = $results['result'];
+        $totalWishes = $results['resultCount'];
+        $totalPages = ceil($totalWishes/$maxResults);
 
         return $this->render('wish/list.html.twig', [
-            'wishes' => $wishesLast10
+            'wishes' => $wishesList,
+            'currentPage' => $page,
+            'totalWishes' => $totalWishes,
+            'totalPages' => $totalPages
         ]);
     }
 
     /**
-     * @Route("/wishes/{id}", name="wish_detail")
+     * @Route("/wishes/detail/{id}", name="wish_detail")
      */
     public function detail(int $id, WishRepository $wishRepository): Response
     {

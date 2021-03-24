@@ -35,12 +35,17 @@ class Wish
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $is_published;
+    private $is_published = 0;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $date_created;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $likes = 0;
 
     public function getId(): ?int
     {
@@ -103,6 +108,18 @@ class Wish
     public function setDateCreated(\DateTimeInterface $date_created): self
     {
         $this->date_created = $date_created;
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(int $likes): self
+    {
+        $this->likes = $likes;
 
         return $this;
     }

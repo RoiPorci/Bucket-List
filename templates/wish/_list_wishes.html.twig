@@ -1,0 +1,19 @@
+{% for wish in wishes %}
+    <div class="col mb-1 mt-2">
+        <div class="card list-wishes bg-light">
+            <a href="{{ path('wish_detail', {id:wish.id}) }}" class="stretched-link"></a>
+            <div class="bd-placeholder-img">
+                <img src="{{ asset('img/wish.jpg') }}" alt="look up to the stars" class="img-wish rounded-circle float-start">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ wish.title }}</h5>
+                <p class="card-text mb-0">{{ wish.author }}</p>
+                <p class="card-text mt-0">
+                    <a class="" href="#"><i class="far fa-star"></i></a> {{ wish.likes }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div>Rien à voir ici pour l'instant!</div>
+{% endfor %}

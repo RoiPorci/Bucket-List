@@ -6,21 +6,38 @@
     <div class="container">
         <h1 class="text-center text-dark-blue mt-2 mb-2">Liste des voeux <i class="bi bi-stars"></i></h1>
 
-        {% for wish in wishes %}
-            <div class="col mb-1 mt-2">
-                    <div class="card list-wishes">
-                        <a href="{{ path('wish_detail', {id:wish.id}) }}" class="stretched-link"></a>
-                        <div class="bd-placeholder-img">
-                            <img src="{{ asset('img/wish.jpg') }}" alt="look up to the stars" class="img-wish rounded float-start">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ wish.title }}</h5>
-                            <p class="card-text">{{ wish.author }}</p>
-                        </div>
-                    </div>
+        {{ include('wish/_list_wishes.html.twig') }}
 
-            </div>
-        {% endfor %}
+        <nav aria-label="navigate list wishes" class="mb-1 mt-2">
+            <ul class="pagination">
+                {% if (currentPage > 1) %}
+                    <li class="page-item">
+                        <a class="page-link page-inactive" href="{{ path('wish_list', {'page': 1}) }}"><i class="fas fa-angle-double-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link page-inactive" href="{{ path('wish_list', {'page': currentPage-1}) }}"><i class="fas fa-angle-left"></i></a>
+                    </li>
+                {% endif %}
+
+                {% for num in currentPage-2..currentPage+2 %}
+                    {% if (num > 0 and num <= totalPages) %}
+                        <li class="page-item">
+                            <a class="page-link {% if (num==currentPage) %}dark-blue text-white{% else %}page-inactive{% endif %}"
+                               href="{{ path('wish_list', {'page': num}) }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if (currentPage < totalPages) %}
+                    <li class="page-item">
+                        <a class="page-link page-inactive" href="{{ path('wish_list', {'page': currentPage+1}) }}"><i class="fas fa-angle-right"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link page-inactive" href="{{ path('wish_list', {'page': totalPages}) }}"><i class="fas fa-angle-double-right"></i></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
 
     </div>
 {% endblock %}
