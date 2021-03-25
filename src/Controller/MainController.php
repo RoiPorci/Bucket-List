@@ -19,6 +19,7 @@ class MainController extends AbstractController
     public function home(WishRepository $wishRepository): Response
     {
         $wishesLast10 = $wishRepository->findBy(['is_published' => 1], ['date_created' => 'DESC'], 10);
+
         return $this->render("main/home.html.twig", [
             'wishes' => $wishesLast10
         ]);

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Wish;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,13 +37,16 @@ class WishRepository extends ServiceEntityRepository
         $queryBuilder->setFirstResult($offset);
 
         $queryBuilder->select('w');
+        //On ajoute une jointure pour éviter les multiples requêtes SQL réalisées par Doctrine
+        $queryBuilder->leftJoin('w.categories', 'c');
+        $queryBuilder->addSelect('c');
         $query = $queryBuilder->getQuery();
 
-        $result = $query->getResult();
+        $paginator = new Paginator($query);
 
         return [
             "resultCount" => $resultCount,
-            "result" => $result
+            "result" => $paginator
         ];
     }
 }

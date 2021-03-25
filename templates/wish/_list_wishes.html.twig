@@ -12,6 +12,13 @@
                     <a class="" href="#"><i class="far fa-star"></i></a> {{ wish.likes }}
                 </p>
             </div>
+            <div class="col order-last">
+                <p class="card-text mt-2 mx-2 text-end">
+                    {% for category in wish.categories %}
+                        {{ category.name }}
+                    {% endfor %}
+                </p>
+            </div>
         </div>
     </div>
 {% else %}

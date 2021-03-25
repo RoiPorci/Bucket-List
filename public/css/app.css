@@ -17,7 +17,6 @@
 
 .list-wishes{
     flex-direction: row;
-    max-height: 150px;
 }
 
 .card-text, .card-title, .text-dark-blue, .pagination-active{

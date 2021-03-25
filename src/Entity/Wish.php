@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WishRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -66,10 +68,16 @@ class Wish
     private $likes = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="wishes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="wishes")
      */
-    private $category;
+    private $categories;
+    // Une seule catégorie dans cet Attribut : ManyToOne !! Modifier les assesseurs pour passer de
+    // ManyToOne à ManyToMany
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -148,15 +156,29 @@ class Wish
         return $this;
     }
 
-    public function getCategory(): ?Category
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
-    public function setCategory(?Category $category): self
+    public function addCategory(Category $category): self
     {
-        $this->category = $category;
+        dump('coucou');
+        if (!$this->categories->contains($category)) {
+            $this->categories[0] = $category;
+        }
 
         return $this;
     }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
 }
