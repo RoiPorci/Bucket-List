@@ -13,6 +13,8 @@ class MainController extends AbstractController
 {
     /**
      * @Route ("/", name="main_home")
+     * @param WishRepository $wishRepository
+     * @return Response
      */
     public function home(WishRepository $wishRepository): Response
     {
