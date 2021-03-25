@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\WishRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=WishRepository::class)
+ * @UniqueEntity(fields={"title"}, message="Ce titre existe déjà!")
  */
 class Wish
 {
@@ -18,16 +21,31 @@ class Wish
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner un titre!")
+     * @Assert\Length(
+     *     min=3,
+     *     max=250,
+     *     minMessage="3 caractères minimum svp!",
+     *     maxMessage="250 caractères maximum svp!"
+     * )
      * @ORM\Column(type="string", length=250)
      */
     private $title;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner une description!")
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner un auteur!")
+     * @Assert\Length(
+     *     min=3,
+     *     max=50,
+     *     minMessage="3 caractères minimum svp!",
+     *     maxMessage="50 caractères maximum svp!"
+     * )
      * @ORM\Column(type="string", length=50)
      */
     private $author;

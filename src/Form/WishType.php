@@ -16,15 +16,17 @@ class WishType extends AbstractType
     {
         $builder
             ->add('title',TextType::class, [
-                'label' => 'Titre'
+                'label' => 'Titre',
+                'required' => false
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'Description',
+                'required' => false
             ])
             ->add('author', TextType::class, [
-                'label' => 'Auteur'
+                'label' => 'Auteur',
+                'required' => false
             ])
-            ->add('Envoyer', SubmitType::class)
         ;
     }
 

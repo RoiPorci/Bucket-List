@@ -3,7 +3,25 @@
 {% block title  %}{{ parent() }}Faire un Vœu{% endblock %}
 
 {% block body %}
+
+    {# form_theme form 'bootstrap_4_layout.html.twig' #}
     <div class="container">
-        {{ form(wishForm) }}
+        <div class="row justify-content-center">
+            <div class="card col-lg-8 mt-2 p-0 bg-light">
+                <div class="card-body text-center p-0">
+                    <h1 class="card-header dark-blue text-white mb-0 ms-0"><i class="fas fa-star text-warning"></i> Faîtes un voeu</h1>
+                    <div class="px-4 mt-2 mb-2">
+                        {{ form_start(wishForm) }}
+
+                        {{ form_widget(wishForm) }}
+
+                        <button class="btn dark-blue text-white mt-2">Faire mon voeu</button>
+
+                        {{ form_end(wishForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 {% endblock %}

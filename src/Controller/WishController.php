@@ -67,13 +67,20 @@ class WishController extends AbstractController
 
         $wishForm->handleRequest($request);
 
-        if ($wishForm->isSubmitted()){
+        if ($wishForm->isSubmitted() && $wishForm->isValid()){
             $wish->setLikes(0);
             $wish->setIsPublished(1);
             $wish->setDateCreated(new \DateTime());
 
             $entityManager->persist($wish);
             $entityManager->flush();
+
+            $this->addFlash("success", "Merci d'avoir fait votre voeu!");
+
+            return $this->render("wish/detail.html.twig", [
+                'id' => $wish->getId(),
+                'wish' => $wish
+            ]);
         }
 
         return $this->render('wish/new.html.twig', [

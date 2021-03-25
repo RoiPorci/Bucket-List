@@ -32,3 +32,9 @@
     background-color: #f8f9fa;
     color: #0f3c6d;
 }
+
+/* Form */
+form label{
+    color: #0f3c6d;
+    background-color: blue;
+}
