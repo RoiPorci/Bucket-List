@@ -33,8 +33,12 @@
     color: #0f3c6d;
 }
 
-/* Form */
+/* TODO Form */
 form label{
+    margin: 0.5em auto auto;
     color: #0f3c6d;
-    background-color: blue;
+}
+
+form .form-error-icon{
+    display: none;
 }
