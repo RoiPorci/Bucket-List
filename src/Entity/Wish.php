@@ -71,12 +71,18 @@ class Wish
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="wishes")
      */
     private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reaction::class, mappedBy="wish", orphanRemoval=true)
+     */
+    private $reactions;
     // Une seule catégorie dans cet Attribut : ManyToOne !! Modifier les assesseurs pour passer de
     // ManyToOne à ManyToMany
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->reactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,36 @@ class Wish
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reaction[]
+     */
+    public function getReactions(): Collection
+    {
+        return $this->reactions;
+    }
+
+    public function addReaction(Reaction $reaction): self
+    {
+        if (!$this->reactions->contains($reaction)) {
+            $this->reactions[] = $reaction;
+            $reaction->setWish($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReaction(Reaction $reaction): self
+    {
+        if ($this->reactions->removeElement($reaction)) {
+            // set the owning side to null (unless already changed)
+            if ($reaction->getWish() === $this) {
+                $reaction->setWish(null);
+            }
+        }
 
         return $this;
     }

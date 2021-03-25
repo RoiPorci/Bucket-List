@@ -52,7 +52,7 @@ class AppFixtures extends Fixture
             $wish->setIsPublished($faker->boolean(90));
             $wish->setDateCreated($faker->dateTimeBetween('- 2 years'));
             $wish->setLikes($faker->numberBetween(0, 5000));
-            $wish->setCategory($faker->randomElement($categories));
+            $wish->addCategory($faker->randomElement($categories));
 
             $manager->persist($wish);
         }
