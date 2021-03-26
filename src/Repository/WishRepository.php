@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Wish;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,6 +32,7 @@ class WishRepository extends ServiceEntityRepository
 
         $queryBuilder->select('COUNT(w)');
         $countQuery = $queryBuilder->getQuery();
+
         $resultCount = $countQuery->getSingleScalarResult();
 
         $queryBuilder->addOrderBy('w.date_created', 'DESC');
@@ -48,5 +51,18 @@ class WishRepository extends ServiceEntityRepository
             "resultCount" => $resultCount,
             "result" => $paginator
         ];
+    }
+
+    public function findDetailedWish(int $id){
+        $queryBuilder = $this->createQueryBuilder('w');
+        $queryBuilder->andWhere('w.id = '.$id);
+
+        $queryBuilder->select('w');
+        //On ajoute une jointure pour éviter les multiples requêtes SQL réalisées par Doctrine
+        $queryBuilder->leftJoin('w.categories', 'c');
+        $queryBuilder->addSelect('c');
+        $query = $queryBuilder->getQuery();
+
+        $paginator = new Paginator($query);
     }
 }

@@ -48,10 +48,11 @@
                     {% for reaction in wish.reactions %}
                         <div class=" border-top text-start">
                             <div class="px-3 mt-2 mb-0">
-                                <blockquote class="blockquote mb-0 mx-2">
+                                <p class="mb-2 mx-2">
                                     {{ reaction.message }}
-                                    <footer class="blockquote mb-2"><span class="card-title ">{{ reaction.author }}</span><cite title="Source Title">, <small class="fs-6 fw-light">le {{ reaction.dateCreated|date('d/m/Y à H:i') }}</small></cite></footer>
-                                </blockquote>
+                                    <br>
+                                    <span class="card-title "><strong>{{ reaction.author }}</strong></span><cite title="Source Title">, <small class="fw-light">le {{ reaction.dateCreated|date('d/m/Y à H:i') }}</small></cite>
+                                </p>
                             </div>
                         </div>
                     {% endfor %}
@@ -66,10 +67,10 @@
                     <div class="modal-content">
                         <div class="modal-header bg-light">
                             <div class="col-1 align-self-start">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button role="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="col-11">
-                                <p class="modal-title" id="modalLabel">{{ wish.description }} - <strong>{{ wish.author }}</strong></p>
+                                <p class="modal-title" id="modalLabel">{{ wish.description }} - <strong class="text-dark-blue">{{ wish.author }}</strong></p>
                             </div>
                         </div>
                         <div class="modal-body bg-light">
