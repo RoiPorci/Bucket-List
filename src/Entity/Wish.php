@@ -79,7 +79,7 @@ class Wish
      */
     private $reactions;
 
-    /** propriété bidon pour le form */
+    /** propriété bidon pour le form (à enlever si on doit passer en vraie ManyToMany) */
     private $category;
 
     /**
