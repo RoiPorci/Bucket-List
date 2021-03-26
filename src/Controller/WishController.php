@@ -102,9 +102,13 @@ class WishController extends AbstractController
 
             $this->addFlash("success", "Merci d'avoir fait votre voeu ". $wish->getAuthor() ."!");
 
+            $reaction = new Reaction();
+            $reactionForm = $this->createForm(ReactionType::class, $reaction);
+
             return $this->render("wish/detail.html.twig", [
                 'id' => $wish->getId(),
-                'wish' => $wish
+                'wish' => $wish,
+                'reactionForm' => $reactionForm->createView()
             ]);
         }
 
