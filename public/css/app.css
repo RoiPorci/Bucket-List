@@ -36,6 +36,10 @@
     color: green;
 }
 
+.hover-red:hover{
+    color: red;
+}
+
 /* Form */
 form label{
     margin: 0.5em auto auto;

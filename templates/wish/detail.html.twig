@@ -18,11 +18,31 @@
                         <footer class="blockquote-footer my-1"><span class="card-title h5">{{ wish.author }}</span><cite title="Source Title">, <small>le {{ wish.dateCreated|date('d/m/Y à H:i') }}</small></cite></footer>
                     </blockquote>
                     <img src="{{ asset('img/wish.jpg') }}" class="card-img-bottom rounded w-50 h-auto mb-2" alt="wish image">
+
                     <div class="row mx-2">
-                        <div class=" border-top">
-                            <span type="button" class="col-1 fs-5 text-dark-blue hover-green" data-bs-toggle="modal" data-bs-target="#displayReactionForm">
-                                <i class="far fa-comment"></i>
-                            </span>
+                        <div class="container border-top">
+                            <div class="row mx-2 my-2">
+                                <div class="col align-self-start text-dark-blue">
+                                    {{ wish.likes }} likes
+                                </div>
+                                <div class="col align-self-end text-dark-blue">
+                                    {{ wish.likes }} réponses
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container border-top">
+                            <div class="row mx-2 my-2">
+                                <div class="col align-self-start text-dark-blue">
+                                    <span type="button" class="fs-5 hover-red">
+                                        <i class="far fa-heart"></i>
+                                    </span>
+                                </div>
+                                <div class="col align-self-end text-dark-blue">
+                                    <span type="button" class="fs-5 hover-green" data-bs-toggle="modal" data-bs-target="#displayReactionForm">
+                                        <i class="far fa-comment"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {% for reaction in wish.reactions %}
