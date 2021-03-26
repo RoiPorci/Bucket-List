@@ -1,0 +1,30 @@
+<nav aria-label="navigate list wishes" class="mb-1 mt-2">
+    <ul class="pagination">
+        {% if (currentPage > 1) %}
+            <li class="page-item">
+                <a class="page-link page-inactive" href="{{ path(route, {'page': 1, 'id': id ? id : ''}) }}"><i class="fas fa-angle-double-left"></i></a>
+            </li>
+            <li class="page-item">
+                <a class="page-link page-inactive" href="{{ path(route, {'page': currentPage-1, 'id': id ? id : ''}) }}"><i class="fas fa-angle-left"></i></a>
+            </li>
+        {% endif %}
+
+        {% for num in currentPage-2..currentPage+2 %}
+            {% if (num > 0 and num <= totalPages) %}
+                <li class="page-item">
+                    <a class="page-link {% if (num==currentPage) %}dark-blue text-white{% else %}page-inactive{% endif %}"
+                       href="{{ path(route, {'page': num, 'id': id ? id : ''}) }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if (currentPage < totalPages) %}
+            <li class="page-item">
+                <a class="page-link page-inactive" href="{{ path(route, {'page': currentPage+1, 'id': id ? id : ''}) }}"><i class="fas fa-angle-right"></i></a>
+            </li>
+            <li class="page-item">
+                <a class="page-link page-inactive" href="{{ path(route, {'page': totalPages, 'id': id ? id : ''}) }}"><i class="fas fa-angle-double-right"></i></a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

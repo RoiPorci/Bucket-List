@@ -6,6 +6,7 @@ use App\Entity\Reaction;
 use App\Entity\Wish;
 use App\Form\ReactionType;
 use App\Form\WishType;
+use App\Repository\ReactionRepository;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,30 +29,47 @@ class WishController extends AbstractController
         $wishesList = $results['result'];
         $totalWishes = $results['resultCount'];
         $totalPages = ceil($totalWishes/$maxResults);
+        $route = "wish_list";
 
         return $this->render('wish/list.html.twig', [
             'wishes' => $wishesList,
             'currentPage' => $page,
             'totalWishes' => $totalWishes,
-            'totalPages' => $totalPages
+            'totalPages' => $totalPages,
+            'route' => $route
         ]);
     }
 
     /**
-     * @Route("/wishes/detail/{id}", name="wish_detail")
+     * @Route("/wishes/detail/{id}/{page}", name="wish_detail", requirements={"page": "\d+"})
      * @param int $id
+     * @param int $page
      * @param WishRepository $wishRepository
+     * @param ReactionRepository $reactionRepository
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function detail(int $id, WishRepository $wishRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function detail(int $id, int $page = 1,
+                           WishRepository $wishRepository,
+                           ReactionRepository $reactionRepository,
+                           Request $request,
+                           EntityManagerInterface $entityManager): Response
     {
-        $wish = $wishRepository->find($id);
+        $maxReactions = 20;
+
+        $wish = $wishRepository->findDetailedWish($id);
 
         if(!$wish){
             throw $this->createNotFoundException("Oups, ce voeu n'existe pas !");
         }
+
+        $resultsReaction = $reactionRepository->findWishReactions($wish->getId(), $page, $maxReactions);
+
+        $reactions = $resultsReaction['result'];
+        $totalReactions = $resultsReaction['resultCount'];
+        $totalPages = ceil($totalReactions/$maxReactions);
+        $route = "wish_detail";
 
         $reaction = new Reaction();
         $reactionForm = $this->createForm(ReactionType::class, $reaction);
@@ -67,6 +85,8 @@ class WishController extends AbstractController
 
             $this->addFlash("success", "Merci pour votre réaction ". $reaction->getAuthor() ."!");
 
+            return $this->redirectToRoute('wish_detail', ['id' => $id]);
+
         } elseif ($reactionForm->isSubmitted() && !$reactionForm->isValid()) {
             $this->addFlash("danger", "Votre réaction n'a pas été envoyée!");
         }
@@ -74,7 +94,12 @@ class WishController extends AbstractController
         return $this->render('wish/detail.html.twig', [
             'id' => $wish->getId(),
             'wish' => $wish,
-            'reactionForm' => $reactionForm->createView()
+            'reactionForm' => $reactionForm->createView(),
+            'reactions' => $reactions,
+            'currentPage' => $page,
+            'totalReactions' => $totalReactions,
+            'totalPages' => $totalPages,
+            'route' => $route
         ]);
     }
 

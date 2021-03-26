@@ -55,7 +55,10 @@ class WishRepository extends ServiceEntityRepository
 
     public function findDetailedWish(int $id){
         $queryBuilder = $this->createQueryBuilder('w');
-        $queryBuilder->andWhere('w.id = '.$id);
+
+        $queryBuilder->andWhere("w.id = :id");
+        $queryBuilder->setParameter(":id", $id);
+        $queryBuilder->andWhere('w.is_published = true');
 
         $queryBuilder->select('w');
         //On ajoute une jointure pour éviter les multiples requêtes SQL réalisées par Doctrine
@@ -63,6 +66,6 @@ class WishRepository extends ServiceEntityRepository
         $queryBuilder->addSelect('c');
         $query = $queryBuilder->getQuery();
 
-        $paginator = new Paginator($query);
+        return $query->getOneOrNullResult();
     }
 }

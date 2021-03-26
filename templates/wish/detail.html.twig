@@ -23,10 +23,10 @@
                         <div class="container border-top">
                             <div class="row mx-2 my-2">
                                 <div class="col align-self-start text-dark-blue">
-                                    {{ wish.likes }} likes
+                                    {{ wish.likes }} like{{ wish.likes>1 ? 's' : ''}}
                                 </div>
                                 <div class="col align-self-end text-dark-blue">
-                                    {{ wish.likes }} réponses
+                                    {{ totalReactions }} réponse{{ totalReactions>1 ? 's' : ''}}
                                 </div>
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </div>
-                    {% for reaction in wish.reactions %}
+                    {% for reaction in reactions %}
                         <div class=" border-top text-start">
                             <div class="px-3 mt-2 mb-0">
                                 <p class="mb-2 mx-2">
@@ -56,6 +56,46 @@
                             </div>
                         </div>
                     {% endfor %}
+
+                    {% if totalPages > 1 %}
+                        <div class="row mx-2">
+                            <div class="container border-top">
+                                <nav aria-label="navigate" class="mb-0 mt-2">
+                                    <ul class="pagination">
+                                        {% if (currentPage > 1) %}
+                                            <li class="page-item">
+                                                <a class="page-link page-inactive" href="{{ path(route, {'page': 1, 'id':id}) }}"><i class="fas fa-angle-double-left"></i></a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link page-inactive" href="{{ path(route, {'page': currentPage-1, 'id':id}) }}"><i class="fas fa-angle-left"></i></a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for num in currentPage-2..currentPage+2 %}
+                                            {% if (num > 0 and num <= totalPages) %}
+                                                <li class="page-item">
+                                                    <a class="page-link {% if (num==currentPage) %}dark-blue text-white{% else %}page-inactive{% endif %}"
+                                                       href="{{ path(route, {'page': num, 'id':id}) }}">{{ num }}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if (currentPage < totalPages) %}
+                                            <li class="page-item">
+                                                <a class="page-link page-inactive" href="{{ path(route, {'page': currentPage+1, 'id':id}) }}"><i class="fas fa-angle-right"></i></a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link page-inactive" href="{{ path(route, {'page': totalPages, 'id':id}) }}"><i class="fas fa-angle-double-right"></i></a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {#{{ include('main/_pagination.html.twig') }}#}
+
                 </div>
             </div>
 
