@@ -68,16 +68,16 @@ class Wish
     private $likes = 0;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner une catégorie!")
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="wishes")
      */
-    private $categories;
+    private $categories; //Many to Many au cas-où :)
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner un auteur!")
      * @ORM\OneToMany(targetEntity=Reaction::class, mappedBy="wish", orphanRemoval=true)
      */
     private $reactions;
-    // Une seule catégorie dans cet Attribut : ManyToOne !! Modifier les assesseurs pour passer de
-    // ManyToOne à ManyToMany
 
     public function __construct()
     {

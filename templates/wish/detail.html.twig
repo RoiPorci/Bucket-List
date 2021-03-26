@@ -7,17 +7,63 @@
         <div class="row justify-content-center">
             <div class="card col-lg-8 p-0 bg-light">
                 <div class="card-body text-center p-0">
-                    <h1 class="card-header dark-blue text-white mb-2 ms-0"><i class="fas fa-star text-warning"></i> {{ wish.title }}</h1>
-                    <h3 class="card-text">
+                    <h4 class="card-header dark-blue text-white mb-2 ms-0"><i class="fas fa-star text-warning"></i> {{ wish.title }}</h4>
+                    <h5 class="card-text">
                         {% for category in wish.categories %}
                             {{ category.name }}
                         {% endfor %}
-                    </h3>
+                    </h5>
                     <blockquote class="blockquote mb-0 mx-2">
                         <p class="">{{ wish.description }}</p>
-                        <footer class="blockquote-footer my-1"><span class="card-title h5">{{ wish.author }}</span><cite title="Source Title">, le {{ wish.dateCreated|date('d/m/Y à H:i') }}</cite></footer>
+                        <footer class="blockquote-footer my-1"><span class="card-title h5">{{ wish.author }}</span><cite title="Source Title">, <small>le {{ wish.dateCreated|date('d/m/Y à H:i') }}</small></cite></footer>
                     </blockquote>
                     <img src="{{ asset('img/wish.jpg') }}" class="card-img-bottom rounded w-50 h-auto mb-2" alt="wish image">
+                    <div class="row mx-2">
+                        <div class=" border-top">
+                            <span type="button" class="col-1 fs-5 text-dark-blue hover-green" data-bs-toggle="modal" data-bs-target="#displayReactionForm">
+                                <i class="far fa-comment"></i>
+                            </span>
+                        </div>
+                    </div>
+                    {% for reaction in wish.reactions %}
+                        <div class=" border-top text-start">
+                            <div class="px-3 mt-2 mb-0">
+                                <blockquote class="blockquote mb-0 mx-2">
+                                    {{ reaction.message }}
+                                    <footer class="blockquote mb-2"><span class="card-title ">{{ reaction.author }}</span><cite title="Source Title">, <small class="fs-6 fw-light">le {{ reaction.dateCreated|date('d/m/Y à H:i') }}</small></cite></footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="displayReactionForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="col-1 align-self-start">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="col-11">
+                                <p class="modal-title" id="modalLabel">{{ wish.description }} - <strong>{{ wish.author }}</strong></p>
+                            </div>
+                        </div>
+                        <div class="modal-body bg-light">
+                            {{ form_start(reactionForm) }}
+
+                            {{ form_widget(reactionForm) }}
+
+                            <div class="col-2 align-self-end">
+                                <button class="btn dark-blue text-white mt-2">Réagir</button>
+                            </div>
+
+                            {{ form_end(reactionForm) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
