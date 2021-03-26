@@ -79,6 +79,27 @@ class Wish
      */
     private $reactions;
 
+    /** propriété bidon pour le form */
+    private $category;
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->categories->count() ? $this->categories->first() : null;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->categories->clear();
+        $this->addCategory($category);
+        $this->category = $category;
+    }
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();

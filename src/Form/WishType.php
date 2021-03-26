@@ -28,7 +28,17 @@ class WishType extends AbstractType
                 "label" => "Auteur",
                 "required" => false
             ])
-            ->add("categories", EntityType::class, [
+            ->add("category", EntityType::class, [
+                "class" => Category::class,
+                "choice_label" => "name",
+                "label" => "Catégorie",
+                "multiple" => false,
+                "attr" => [
+                    "class" => "form-select"
+                ],
+                //"expanded" => true
+            ])
+            /*->add("categories", EntityType::class, [
                 "label" => "Catégorie",
                 "class" => Category::class,
                 "choice_label" => "name",
@@ -36,7 +46,7 @@ class WishType extends AbstractType
                     "class" => "form-select"
                 ],
                 "multiple" => true
-            ])
+            ])*/
         ;
     }
 
