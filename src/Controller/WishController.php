@@ -60,7 +60,7 @@ class WishController extends AbstractController
         Security $security
     ): Response
     {
-        $maxReactions = 20;
+        $maxReactions = 10;
 
         $wish = $wishRepository->findDetailedWish($id);
 
@@ -80,7 +80,6 @@ class WishController extends AbstractController
 
         $reactionForm->handleRequest($request);
 
-        //TODO demander pour isGranted
         if ($reactionForm->isSubmitted() && $reactionForm->isValid() && $security->isGranted('ROLE_USER')){
             $reaction->setWish($wish);
             $reaction->setDateCreated(new \DateTime());
@@ -135,14 +134,8 @@ class WishController extends AbstractController
 
             $this->addFlash("success", "Merci d'avoir fait votre voeu ". $wish->getAuthor() ."!");
 
-            $reaction = new Reaction();
-            $reactionForm = $this->createForm(ReactionType::class, $reaction);
+            return $this->redirectToRoute('wish_detail', ['id' => $wish->getId()]);
 
-            return $this->render("wish/detail.html.twig", [
-                'id' => $wish->getId(),
-                'wish' => $wish,
-                'reactionForm' => $reactionForm->createView()
-            ]);
         }
 
         return $this->render('wish/new.html.twig', [

@@ -49,3 +49,7 @@ form label{
 form .form-error-icon{
     display: none;
 }
+
+form .form-check-input {
+    margin: 0.75em auto auto;
+}

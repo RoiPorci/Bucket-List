@@ -5,13 +5,19 @@
 {% block body %}
 
     <div class="container">
-        <h1>S'inscrire</h1>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 p-4 bg-light border rounded">
+                <fieldset class="">
+                    <legend class="h3 text-dark-blue">Créez votre compte!</legend>
 
-        {{ form_start(registrationForm) }}
-            {{ form_widget(registrationForm) }}
+                    {{ form_start(registrationForm) }}
+                        {{ form_widget(registrationForm) }}
 
-            <button class="btn dark-blue text-white mt-2">Créer mon compte</button>
-        {{ form_end(registrationForm) }}
+                        <button class="btn dark-blue text-white mt-2">S'inscrire</button>
+                    {{ form_end(registrationForm) }}
+                </fieldset>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

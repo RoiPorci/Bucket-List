@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\WishRepository;
+use App\Util\Censurator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -82,6 +83,8 @@ class Wish
     /** propriété bidon pour le form (à enlever si on doit passer en vraie ManyToMany) */
     private $category;
 
+    private $censurator;
+
     /**
      * @return mixed
      */
@@ -104,6 +107,7 @@ class Wish
     {
         $this->categories = new ArrayCollection();
         $this->reactions = new ArrayCollection();
+        $this->censurator = new Censurator();
     }
 
     public function getId(): ?int
@@ -130,7 +134,7 @@ class Wish
 
     public function setDescription(?string $description): self
     {
-        $this->description = $description;
+        $this->description = $this->censurator->purify($description);
 
         return $this;
     }
