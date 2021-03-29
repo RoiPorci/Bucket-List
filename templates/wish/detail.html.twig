@@ -100,33 +100,35 @@
             </div>
 
 
-
-            <!-- Modal -->
-            <div class="modal fade" id="displayReactionForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-light">
-                            <div class="col-1 align-self-start">
-                                <button role="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            {% if app.user %}
+                <!-- Modal -->
+                <div class="modal fade" id="displayReactionForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light">
+                                <div class="col-1 align-self-start">
+                                    <button role="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="col-11">
+                                    <p class="modal-title" id="modalLabel">{{ wish.description }} - <strong class="text-dark-blue">{{ wish.author }}</strong></p>
+                                </div>
                             </div>
-                            <div class="col-11">
-                                <p class="modal-title" id="modalLabel">{{ wish.description }} - <strong class="text-dark-blue">{{ wish.author }}</strong></p>
+                            <div class="modal-body bg-light">
+                                {{ form_start(reactionForm) }}
+
+                                {{ form_widget(reactionForm) }}
+
+                                <div class="col-2 align-self-end">
+                                    <button class="btn dark-blue text-white mt-2">Réagir</button>
+                                </div>
+
+                                {{ form_end(reactionForm) }}
                             </div>
-                        </div>
-                        <div class="modal-body bg-light">
-                            {{ form_start(reactionForm) }}
-
-                            {{ form_widget(reactionForm) }}
-
-                            <div class="col-2 align-self-end">
-                                <button class="btn dark-blue text-white mt-2">Réagir</button>
-                            </div>
-
-                            {{ form_end(reactionForm) }}
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}

@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class WishController extends AbstractController
 {
@@ -50,11 +51,14 @@ class WishController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    public function detail(int $id, int $page = 1,
-                           WishRepository $wishRepository,
-                           ReactionRepository $reactionRepository,
-                           Request $request,
-                           EntityManagerInterface $entityManager): Response
+    public function detail(
+        int $id, int $page = 1,
+        WishRepository $wishRepository,
+        ReactionRepository $reactionRepository,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Security $security
+    ): Response
     {
         $maxReactions = 20;
 
@@ -76,7 +80,8 @@ class WishController extends AbstractController
 
         $reactionForm->handleRequest($request);
 
-        if ($reactionForm->isSubmitted() && $reactionForm->isValid()){
+        //TODO demander pour isGranted
+        if ($reactionForm->isSubmitted() && $reactionForm->isValid() && $security->isGranted('ROLE_USER')){
             $reaction->setWish($wish);
             $reaction->setDateCreated(new \DateTime());
 
@@ -112,6 +117,9 @@ class WishController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $wish = new Wish();
+
+        $username = $this->getUser()->getUsername();
+        $wish->setAuthor($username);
 
         $wishForm = $this->createForm(WishType::class, $wish);
 

@@ -32,6 +32,7 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'type' => PasswordType::class,
+                'invalid_message' => 'Le mot de passe doit correspondre!',
                 'first_options' => ['label' => 'Mot de passe',],
                 'second_options' => ['label' => 'Confirmez votre mot de passe',],
                 'constraints' => [
