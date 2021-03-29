@@ -36,6 +36,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findUserByLogin(string $login): User{
+        $queryBuilder = $this->createQueryBuilder('u');
+
+        $queryBuilder->select('u');
+        $queryBuilder->andWhere("u.email = :login");
+        $queryBuilder->orWhere("u.username = :login");
+        $queryBuilder->setParameter(":login", $login);
+        $query = $queryBuilder->getQuery();
+
+        dd($query);
+
+        return $query->getOneOrNullResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

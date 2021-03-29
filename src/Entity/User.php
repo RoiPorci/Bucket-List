@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà pris!")
+ * @UniqueEntity(fields={"username"}, message="Ce pseudo est déjà pris!")
  */
 class User implements UserInterface
 {
@@ -21,6 +23,13 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner votre email!")
+     * @Assert\Length(
+     *     min=6,
+     *     max=180,
+     *     minMessage="6 caractères minimum svp!",
+     *     maxMessage="180 caractères maximum svp!"
+     * )
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -37,9 +46,25 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner votre pseudo!")
+     * @Assert\Length(
+     *     min=3,
+     *     max=50,
+     *     minMessage="3 caractères minimum svp!",
+     *     maxMessage="50 caractères maximum svp!"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[\w]{3,}$/",
+     *     message="Seuls les caractères alphanumériques et ._ sont acceptés!"
+     * )
      * @ORM\Column(type="string", length=50)
      */
     private $username;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_created;
 
     public function getId(): ?int
     {
@@ -65,7 +90,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
@@ -125,6 +150,18 @@ class User implements UserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getDateCreated(): ?\DateTimeInterface
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated(\DateTimeInterface $date_created): self
+    {
+        $this->date_created = $date_created;
 
         return $this;
     }
